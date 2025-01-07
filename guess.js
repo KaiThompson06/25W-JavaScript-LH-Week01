@@ -24,35 +24,38 @@ function checkUser() {
     var userNumber = Number(userInput.value);
     // STEP 3b: If this is the first guess, add some text to the screen as a label for listing previous guesses for reference
     if (count === 1) {
-        guesses.textContent = 'Previous guesses: ' + userNumber + ' ';
+        lastResult.textContent = 'Previous guesses: ' + userNumber + ' ';
     }
     else {
         // STEP 3c: Add the user's current guess to that list, plus a space
-        guesses.textContent += userNumber + ' ';
+        lastResult.textContent += userNumber + ' ';
     }
     // STEP 3d: Conditional - the user guessed correctly
     if (userNumber == randomNumber) {
         // Output a success message, then end the game
-        lastResult.textContent = 'Congratulations! You got it right!';
+        guesses.textContent = 'Congratulations! You got it right!';
     }
 
     // STEP 3e: Conditional - the user is all out of guesses
-
-    // Output an appropriate message, then end the game
+    if (count === 10) {
+        // Output an appropriate message, then end the game
+        guesses.textContent = 'Sorry, you are out of guesses.';
+        gameover();
+    }
 
     // STEP 3f: Conditional - the user's guess is incorrect
-
-    // Output an appropriate message
-
-    // If the guess is too low, let the user know
-    if (userNumber < randomNumber) {
-        lowOrHi.textContent = 'Last guess was too low!';
+    if (userNumber !== randomNumber) {
+        // Output an appropriate message
+        guesses.textContent = 'Guesses left: ' + (10 - count);
+        // If the guess is too low, let the user know
+        if (userNumber < randomNumber) {
+            lowOrHi.textContent = 'Last guess was too low!';
+        }
+        // Else if the guess is too high, let the user know
+        else if (userNumber > randomNumber) {
+            lowOrHi.textContent = 'Last guess was too high!';
+        }
     }
-    else if (userNumber > randomNumber) {
-        lowOrHi.textContent = 'Last guess was too high!';
-    }
-    // Else if the guess is too high, let the user know
-
     // STEP 3g: Increment the guess count, move focus to the guess field for the next guess, and clear out the old input
     count++;
     // STEP 3h: Proceed to the bottom of this file, just before we close out the SCRIPT element
