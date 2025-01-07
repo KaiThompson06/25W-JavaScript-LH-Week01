@@ -13,21 +13,28 @@ var userInput = document.getElementById('guessField');
 var submitButton = document.querySelector('button');
 
 // STEP 1d: Create variables to initialize counter for number of guesses
-var count = 0;
+var count = 1;
 
 // STEP 2: Put focus on the field that allows user to type in guesses
 userInput.focus();
+
 // STEP 3: Build a function to check the user's guess
 function checkUser() {
     // STEP 3a: Create a variable to contain what number the user entered
-
+    var userNumber = Number(userInput.value);
     // STEP 3b: If this is the first guess, add some text to the screen as a label for listing previous guesses for reference
-
-    // STEP 3c: Add the user's current guess to that list, plus a space
-
+    if (count === 1) {
+        guesses.textContent = 'Previous guesses: ' + userNumber + ' ';
+    }
+    else {
+        // STEP 3c: Add the user's current guess to that list, plus a space
+        guesses.textContent += userNumber + ' ';
+    }
     // STEP 3d: Conditional - the user guessed correctly
-
-    // Output a success message, then end the game
+    if (userNumber == randomNumber) {
+        // Output a success message, then end the game
+        lastResult.textContent = 'Congratulations! You got it right!';
+    }
 
     // STEP 3e: Conditional - the user is all out of guesses
 
@@ -38,11 +45,16 @@ function checkUser() {
     // Output an appropriate message
 
     // If the guess is too low, let the user know
-
+    if (userNumber < randomNumber) {
+        lowOrHi.textContent = 'Last guess was too low!';
+    }
+    else if (userNumber > randomNumber) {
+        lowOrHi.textContent = 'Last guess was too high!';
+    }
     // Else if the guess is too high, let the user know
 
     // STEP 3g: Increment the guess count, move focus to the guess field for the next guess, and clear out the old input
-
+    count++;
     // STEP 3h: Proceed to the bottom of this file, just before we close out the SCRIPT element
 
 }
@@ -70,3 +82,4 @@ function gameover() {
 // STEP 5f: Generate a new random number
 
 // STEP 3i: Add an event listener for the guess form button that calls the checkGuess function
+submitButton.addEventListener('click', checkUser);
